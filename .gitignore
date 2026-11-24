@@ -1,0 +1,14 @@
+bin/
+obj/
+node_modules/
+.angular/
+src/TerraformGenerator.Server/wwwroot/
+*.user
+.vs/
+TestResults/
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Visual Studio writes its own ports here; the app chooses its port in Program.cs.
+src/TerraformGenerator.Server/Properties/launchSettings.json

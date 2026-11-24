@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1738743">
+  <PropertyGroup>
+    <StartupCommand>npm start</StartupCommand>
+    <!-- The Angular build runs from the scripts (npm run build); Visual Studio only lists the project -->
+    <ShouldRunBuildScript>false</ShouldRunBuildScript>
+    <!-- Angular writes its output straight into the Server's wwwroot -->
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\..\TerraformGenerator.Server\wwwroot\</BuildOutputFolder>
+  </PropertyGroup>
+</Project>

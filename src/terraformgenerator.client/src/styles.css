@@ -1,0 +1,81 @@
+:root {
+  color-scheme: light dark;
+  --canvas: #f4f6fa;
+  --grid: #d3d9e3;
+  --surface: #ffffff;
+  --soft: #f1f4f8;
+  --border: #d8dee8;
+  --text: #1c2430;
+  --muted: #5d6878;
+  --accent: #2563eb;
+  --edge: #6b7686;
+  --error: #c62828;
+  --error-soft: #fdecec;
+  --warning: #9a5b00;
+  --warning-soft: #fff4e0;
+  --ok: #15803d;
+  --ok-soft: #e6f6ec;
+  --code-bg: #111827;
+  --code-text: #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #12161d;
+    --grid: #2a313c;
+    --surface: #1a1f28;
+    --soft: #232a35;
+    --border: #333c4a;
+    --text: #e6e9ef;
+    --muted: #9aa4b2;
+    --accent: #5b8def;
+    --edge: #8b95a5;
+    --error: #ef6b6b;
+    --error-soft: #3a1f22;
+    --warning: #f0b45a;
+    --warning-soft: #3a2e1a;
+    --ok: #4ade80;
+    --ok-soft: #1c3326;
+    --code-bg: #0b0f15;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--canvas);
+  color: var(--text);
+  font: 14px/1.4 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* One color per kind of box, used by the palette and the canvas. */
+[data-kind='webApp'] { --kind-color: #2563eb; }
+[data-kind='containerApp'] { --kind-color: #1d4ed8; }
+[data-kind='functionApp'] { --kind-color: #4f46e5; }
+[data-kind='staticWebApp'] { --kind-color: #0284c7; }
+[data-kind='sqlDatabase'] { --kind-color: #c2410c; }
+[data-kind='postgres'] { --kind-color: #b45309; }
+[data-kind='cosmosDb'] { --kind-color: #be123c; }
+[data-kind='storage'] { --kind-color: #059669; }
+[data-kind='redis'] { --kind-color: #dc2626; }
+[data-kind='serviceBus'] { --kind-color: #0f766e; }
+[data-kind='keyVault'] { --kind-color: #a16207; }
+[data-kind='containerRegistry'] { --kind-color: #475569; }
+[data-kind='frontDoor'] { --kind-color: #7c3aed; }
+[data-kind='dnsZone'] { --kind-color: #0e7490; }
+[data-kind='aiFoundry'] { --kind-color: #9333ea; }
+[data-kind='speech'] { --kind-color: #c026d3; }
+[data-kind='awsLambda'], [data-kind='gcpFunction'] { --kind-color: #4f46e5; }
+[data-kind='awsFargate'], [data-kind='gcpCloudRun'] { --kind-color: #1d4ed8; }
+[data-kind='awsS3'], [data-kind='gcpBucket'] { --kind-color: #059669; }
+[data-kind='awsDynamoDb'], [data-kind='gcpFirestore'] { --kind-color: #be123c; }
+[data-kind='awsRds'], [data-kind='gcpCloudSql'] { --kind-color: #c2410c; }
+[data-kind='awsSqs'], [data-kind='gcpPubSub'] { --kind-color: #0f766e; }
+[data-kind='awsSecret'], [data-kind='gcpSecret'] { --kind-color: #a16207; }
+[data-kind='awsCloudFront'], [data-kind='gcpLoadBalancer'] { --kind-color: #7c3aed; }
+[data-kind='awsRoute53'], [data-kind='gcpDns'] { --kind-color: #0e7490; }

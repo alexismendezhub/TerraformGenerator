@@ -1,0 +1,98 @@
+<header class="toolbar">
+  <div class="brand">
+    <span>Terraform Generator</span>
+    <span class="tagline">Draw or describe your cloud architecture (Azure, AWS, Google Cloud), get the code</span>
+  </div>
+  <div class="actions">
+    <button type="button" class="ai" [disabled]="!store.aiStatus()?.enabled || store.previewing()"
+            [title]="store.aiStatus()?.enabled ? 'Describe what you need; the AI proposes the drawing and its code, you review and approve' : (store.aiStatus()?.problem ?? '')"
+            (click)="openDialog('describe')">Describe with AI</button>
+    <button type="button" [disabled]="store.previewing()" (click)="openDialog('import')">Import Terraform</button>
+    <span class="divider"></span>
+    <button type="button" [disabled]="store.previewing()" (click)="newDrawing()">New</button>
+    <select class="button" aria-label="Open an example" autocomplete="off" [disabled]="store.previewing()" (change)="example($event)">
+      <option value="">Example…</option>
+      <option value="simple">Web, API and database</option>
+      <option value="everything">Everything (production)</option>
+      <option value="aws">AWS: site, API, containers and data</option>
+      <option value="gcp">Google Cloud: site, API, functions and data</option>
+    </select>
+    <label class="button" [class.disabled]="store.previewing()">
+      Open
+      <input type="file" accept=".json,application/json" autocomplete="off" [disabled]="store.previewing()" (change)="open($event)" hidden />
+    </label>
+    <button type="button" (click)="store.downloadDrawing()">Save drawing</button>
+    <span class="divider"></span>
+    <button type="button" [disabled]="store.previewing() || store.checking() || store.errorCount() > 0 || store.sketch().nodes.length === 0" (click)="check()">
+      {{ store.checking() ? 'Checking…' : 'Check the code' }}
+    </button>
+    <button type="button" class="primary" [disabled]="store.previewing() || store.errorCount() > 0 || store.sketch().nodes.length === 0" (click)="download()">
+      Download (ZIP)
+    </button>
+  </div>
+</header>
+
+@if (notice(); as text) {
+  <div class="notice" role="status">{{ text }} <button type="button" class="close" (click)="notice.set(null)" aria-label="Close">×</button></div>
+}
+
+<main class="layout">
+  <aside class="palette" aria-label="Resources">
+    <button type="button" class="search-button" [disabled]="store.previewing()" (click)="openDialog('search')">Search services…</button>
+    <p class="hint">Any {{ store.platform()?.label }} service. Pin the ones you use and they stay here. Click a section's name to rename it.</p>
+    @for (group of groups(); track group.name) {
+      @if (renaming() === group.name) {
+        <input #renameBox class="rename" type="text" autocomplete="off" spellcheck="false" maxlength="40" [attr.aria-label]="'New name for ' + group.name"
+               [value]="store.sectionName(group.name)" (keydown.enter)="rename(group.name, $event)" (keydown.escape)="renaming.set(null)"
+               (blur)="rename(group.name, $event)" />
+      } @else {
+        <h2><button type="button" class="section" title="Click to rename" (click)="renaming.set(group.name)">{{ store.sectionName(group.name) }}</button></h2>
+      }
+      @for (item of group.items; track item.kind) {
+        <div class="kind-row">
+          <button type="button" class="kind" [attr.data-kind]="item.kind" [disabled]="store.previewing()" [title]="item.description" (click)="store.addNode(item.kind)">
+            <span class="chip">{{ item.short }}</span>{{ item.label }}
+          </button>
+          @if (item.pinned; as type) {
+            <button type="button" class="unpin" [title]="'Unpin ' + item.label" [attr.aria-label]="'Unpin ' + item.label" (click)="store.togglePin(type)">✕</button>
+          }
+        </div>
+      }
+    }
+  </aside>
+
+  <div class="center">
+    @if (store.previewing()) {
+      <div class="preview-banner" role="status">
+        Proposal: green boxes are new, amber ones change, <span class="flag">!</span> needs your review. Your drawing is unchanged until you approve.
+      </div>
+    }
+    <app-canvas class="canvas" />
+  </div>
+
+  <section class="side">
+    @if (store.previewing()) {
+      <app-proposal class="properties" />
+    } @else {
+      <nav class="tabs" role="tablist">
+        <button type="button" role="tab" [class.active]="tab() === 'properties'" (click)="tab.set('properties')">Properties</button>
+        <button type="button" role="tab" [class.active]="tab() === 'code'" (click)="tab.set('code')">
+          {{ codeLabel() }}
+          @if (store.errorCount() > 0) { <span class="count">{{ store.errorCount() }}</span> }
+        </button>
+        <button type="button" role="tab" [class.active]="tab() === 'advice'" (click)="tab.set('advice')">AI review</button>
+      </nav>
+      @switch (tab()) {
+        @case ('properties') { <app-properties class="properties" /> }
+        @case ('code') { <app-output class="output" /> }
+        @case ('advice') { <app-advice class="properties" /> }
+      }
+    }
+  </section>
+</main>
+
+@switch (dialog()) {
+  @case ('describe') { <app-describe (closed)="dialog.set(null)" /> }
+  @case ('import') { <app-import (closed)="dialog.set(null)" /> }
+  @case ('search') { <app-service-search (closed)="dialog.set(null)" /> }
+}

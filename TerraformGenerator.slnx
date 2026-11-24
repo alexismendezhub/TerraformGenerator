@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/TerraformGenerator.Application/TerraformGenerator.Application.csproj" />
+    <Project Path="src/TerraformGenerator.Domain/TerraformGenerator.Domain.csproj" />
+    <Project Path="src/TerraformGenerator.Infrastructure/TerraformGenerator.Infrastructure.csproj" />
+    <Project Path="src/TerraformGenerator.Server/TerraformGenerator.Server.csproj" />
+    <Project Path="src/terraformgenerator.client/terraformgenerator.client.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/src/tests/">
+    <Project Path="src/tests/TerraformGenerator.Domain.UnitTests/TerraformGenerator.Domain.UnitTests.csproj" />
+    <Project Path="src/tests/TerraformGenerator.Server.IntegrationTests/TerraformGenerator.Server.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

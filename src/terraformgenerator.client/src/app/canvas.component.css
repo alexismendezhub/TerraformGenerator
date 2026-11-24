@@ -1,0 +1,199 @@
+:host {
+  display: block;
+  position: relative;
+  overflow: auto;
+  height: 100%;
+  background: var(--canvas);
+}
+
+.surface {
+  display: block;
+  user-select: none;
+  touch-action: none;
+}
+
+.grid-dot {
+  fill: var(--grid);
+}
+
+.node {
+  cursor: grab;
+}
+
+.box {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.12));
+}
+
+.band,
+.band-fill {
+  fill: var(--kind-color);
+}
+
+
+.short {
+  fill: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.name {
+  fill: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.kind {
+  fill: var(--muted);
+  font-size: 12px;
+}
+
+.node.selected .box {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.node.has-error .box {
+  stroke: var(--error);
+  stroke-width: 2.5;
+}
+
+.node.target .box {
+  stroke: var(--accent);
+  stroke-dasharray: 6 4;
+  stroke-width: 2.5;
+}
+
+.node.dim {
+  opacity: 0.35;
+}
+
+.handle {
+  fill: var(--surface);
+  stroke: var(--accent);
+  stroke-width: 2;
+  cursor: crosshair;
+}
+
+.handle:hover {
+  fill: var(--accent);
+}
+
+.edge {
+  cursor: pointer;
+}
+
+.edge .hit {
+  stroke: transparent;
+  stroke-width: 14;
+}
+
+.edge .stroke,
+.draft {
+  stroke: var(--edge);
+  stroke-width: 2;
+}
+
+.edge.selected .stroke {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.edge.invalid .stroke {
+  stroke: var(--error);
+  stroke-dasharray: 5 4;
+}
+
+.draft {
+  stroke-dasharray: 6 4;
+  pointer-events: none;
+}
+
+.arrow-head {
+  fill: var(--edge);
+}
+
+.arrow-head.selected {
+  fill: var(--accent);
+}
+
+.empty {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 380px;
+  padding: 20px 24px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--muted);
+  text-align: center;
+}
+
+.empty p {
+  margin: 0 0 8px;
+}
+
+.node.added .box {
+  stroke: var(--ok);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 3;
+}
+
+.node.changed .box {
+  stroke: var(--warning);
+  stroke-width: 2.5;
+  stroke-dasharray: 6 3;
+}
+
+.review-flag circle {
+  fill: var(--warning);
+}
+
+.review-flag text {
+  fill: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.handle.hidden {
+  display: none;
+}
+
+.resource-group {
+  position: sticky;
+  top: 10px;
+  left: 10px;
+  float: left;
+  margin: 10px 0 0 10px;
+  margin-bottom: -40px;
+  z-index: 2;
+  padding: 6px 12px;
+  border: 1px dashed var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.resource-group .label {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.resource-group .mode {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+}
